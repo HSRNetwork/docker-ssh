@@ -14,7 +14,7 @@ header = (container) ->
   " ###############################################################\r\n" +
   "\r\n"
 
-module.exports = (filters, shell, shell_user) ->
+module.exports = (filters, shell, shell_user, shell_options) ->
   instance: ->
     session = null
     channel = null
@@ -86,6 +86,7 @@ module.exports = (filters, shell, shell_user) ->
             AttachStderr: true
             Tty: true
           execOpts['User'] = shell_user if shell_user
+          execOpts['Cmd'].push shell_options if shell_options
           _container.exec execOpts, (err, exec) ->
             if err
               log.error {container: _containerName}, 'Exec error', err

@@ -14,6 +14,7 @@ keypath         = process.env.KEYPATH
 filters         = process.env.FILTERS
 container       = process.env.CONTAINER
 shell           = process.env.CONTAINER_SHELL
+shell_options   = process.env.CONTAINER_SHELL_OPTIONS
 shell_user      = process.env.SHELL_USER
 authMechanism   = process.env.AUTH_MECHANISM
 authenticationHandler = require('./src/auth') authMechanism
@@ -40,7 +41,7 @@ options =
 filters = {"name":["^/#{container}$"]} if (not filters) and container
 log.info filter: filters, 'Docker filter'
 
-sessionFactory = handlerFactory filters, shell, shell_user
+sessionFactory = handlerFactory filters, shell, shell_user, shell_options
 
 sshServer = new ssh2.Server options, (client, info) ->
   session = sessionFactory.instance()
